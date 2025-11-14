@@ -4,19 +4,18 @@ const navItems = [
   { key: 'home', label: 'Home' },
   { key: 'case-studies', label: 'Case Studies' },
   { key: 'about', label: 'About' },
-  { key: 'insights', label: 'Insights' },
-  { key: 'style', label: 'Style Guide' },
-  { key: 'architecture', label: 'Tech Architecture' },
+  { key: 'blog', label: 'Blog' },
+  { key: 'contact', label: 'Contact' },
 ];
 
 export default function Navbar({ current, onNavigate }) {
   return (
     <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 bg-white/80 border-b border-[#BDBDBD]/40">
       <nav className="mx-auto max-w-6xl px-4 sm:px-6 py-4 flex items-center justify-between" aria-label="Primary">
-        <div className="flex items-center gap-2">
+        <button onClick={()=>onNavigate('home')} className="flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#004D40] rounded">
           <div className="w-8 h-8 rounded-full bg-[#004D40]" aria-hidden />
           <span className="font-serif text-xl tracking-tight text-[#1A1A1A]">Solutions Architect</span>
-        </div>
+        </button>
         <ul className="hidden md:flex items-center gap-6">
           {navItems.map(item => (
             <li key={item.key}>

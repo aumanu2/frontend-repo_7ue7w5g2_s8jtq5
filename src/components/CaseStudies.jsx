@@ -1,75 +1,81 @@
 import React from 'react';
 import CaseStudyCard from './CaseStudyCard';
+import { motion } from 'framer-motion';
 
 const studies = [
   {
+    slug: 'ai-docs',
     title: 'AI-Powered Document Processing Platform',
-    challenge: 'Manual document classification and data extraction created a week-long backlog and compliance risk.',
+    challenge: 'Manual classification and data extraction caused a week-long backlog and compliance risk.',
     solution: [
       'Event-driven pipeline with OCR microservice and embedding-based retrieval',
       'Vector DB for semantic search; autoscaling workers with queue-based backpressure',
       'Human-in-the-loop review tooling with audit trails',
     ],
     impact: [
-      'Cut processing time from 3 days to under 2 hours (96% faster)',
-      'Reduced error rate by 72% via assisted labeling',
+      'Processing time from 3 days to < 2 hours (96% faster)',
+      'Error rate reduced 72% via assisted labeling',
       'Saved ~$120k/year in manual ops costs',
     ],
   },
   {
+    slug: 'ecom-modernization',
     title: 'Multi-Region E‑commerce Platform Modernization',
-    challenge: 'Monolithic app struggled with peak traffic and slow deployments risking revenue during campaigns.',
+    challenge: 'Monolith struggled with peak traffic and slow deployments risking revenue during campaigns.',
     solution: [
-      'Modularized core domains; introduced API gateway and edge caching',
+      'Modularized domains; introduced API gateway and edge caching',
       'Blue/green deployments with automated smoke tests',
-      'Rate-limited, idempotent payment workflows',
+      'Idempotent payment workflows with rate limiting',
     ],
     impact: [
       '99.95% availability during peak (10k+ concurrent users)',
-      'Deployment time reduced by 70% with rollback under 3 minutes',
+      'Deployment time reduced 70% with rollback < 3 minutes',
       'Checkout latency down 38% at P95',
     ],
   },
   {
-    title: 'Observability Platform for Platform Team',
-    challenge: 'Fragmented dashboards and low signal-to-noise slowed incident response and hampered reliability goals.',
+    slug: 'observability',
+    title: 'SLO-Centric Observability Platform',
+    challenge: 'Fragmented dashboards and low signal-to-noise slowed incident response.',
     solution: [
       'Unified tracing, metrics, and logs with SLO-driven alerts',
-      'Service ownership model and golden signals per service',
+      'Service ownership model with golden signals per service',
       'Error budgets aligned to product priorities',
     ],
     impact: [
-      'MTTR reduced by 54%',
+      'MTTR reduced 54%',
       'Alert fatigue down 60% while catching more regressions',
-      'Incident postmortems produce 30% faster fixes',
+      'Incident postmortems produced 30% faster fixes',
     ],
   },
   {
-    title: 'Cost-Optimized Data Lake',
-    challenge: 'Exploding analytics costs and unreliable ETL jobs delayed insights for stakeholders.',
+    slug: 'lakehouse',
+    title: 'Cost-Optimized Lakehouse',
+    challenge: 'Analytics costs ballooned and ETL reliability lagged.',
     solution: [
-      'Lakehouse architecture; table formats with ACID guarantees',
-      'Serverless batch with spot instances and incremental compaction',
+      'Table formats with ACID guarantees and incremental compaction',
+      'Serverless batch with spot instances',
       'Data contracts and schema evolution controls',
     ],
     impact: [
-      'Cut monthly spend by 43% while improving freshness to hourly',
+      'Monthly spend cut 43%, freshness to hourly',
       'Failed job rate down 68%',
       'Stakeholder NPS up 22 points',
     ],
   },
   {
-    title: 'Developer Platform (Internal PaaS)',
-    challenge: 'Inconsistent app scaffolding and infra provisioning slowed feature teams.',
+    slug: 'internal-paas',
+    title: 'Internal PaaS (Developer Platform)',
+    challenge: 'Inconsistent scaffolding and infra provisioning slowed teams.',
     solution: [
-      'Golden paths with templates; paved road for CI/CD and IaC',
-      'Runtime contracts, policy-as-code, and self-serve environments',
-      'Preview deployments for every PR',
+      'Golden paths with templates and paved road CI/CD',
+      'Runtime contracts, policy-as-code, self-serve envs',
+      'Preview deployments per PR',
     ],
     impact: [
-      'Lead time for changes reduced 4x',
+      'Lead time for changes improved 4x',
       'Onboarding time from weeks to days',
-      'Service reliability improved with standardized SLOs',
+      'Reliability improved with standardized SLOs',
     ],
   },
 ];
@@ -85,14 +91,10 @@ export default function CaseStudies() {
       </div>
 
       <div className="mt-8 grid md:grid-cols-2 gap-6">
-        {studies.map((s) => (
-          <CaseStudyCard
-            key={s.title}
-            title={s.title}
-            challenge={s.challenge}
-            impact={s.impact[0]}
-            onClick={() => {}}
-          />
+        {studies.map((s, i) => (
+          <motion.div key={s.slug} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i*0.05 }}>
+            <CaseStudyCard title={s.title} challenge={s.challenge} impact={s.impact[0]} onClick={() => {}} />
+          </motion.div>
         ))}
       </div>
 
