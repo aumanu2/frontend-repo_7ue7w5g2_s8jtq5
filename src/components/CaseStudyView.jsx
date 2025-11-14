@@ -1,11 +1,8 @@
 import React from 'react';
-import CaseStudyCard from './CaseStudyCard';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-const studies = [
-  {
-    slug: 'ai-docs',
+const CASES = {
+  'ai-docs': {
     title: 'AI-Powered Document Processing Platform',
     challenge: 'Manual classification and data extraction caused a week-long backlog and compliance risk.',
     solution: [
@@ -19,8 +16,7 @@ const studies = [
       'Saved ~$120k/year in manual ops costs',
     ],
   },
-  {
-    slug: 'ecom-modernization',
+  'ecom-modernization': {
     title: 'Multi-Region E‑commerce Platform Modernization',
     challenge: 'Monolith struggled with peak traffic and slow deployments risking revenue during campaigns.',
     solution: [
@@ -34,8 +30,7 @@ const studies = [
       'Checkout latency down 38% at P95',
     ],
   },
-  {
-    slug: 'observability',
+  'observability': {
     title: 'SLO-Centric Observability Platform',
     challenge: 'Fragmented dashboards and low signal-to-noise slowed incident response.',
     solution: [
@@ -49,8 +44,7 @@ const studies = [
       'Incident postmortems produced 30% faster fixes',
     ],
   },
-  {
-    slug: 'lakehouse',
+  'lakehouse': {
     title: 'Cost-Optimized Lakehouse',
     challenge: 'Analytics costs ballooned and ETL reliability lagged.',
     solution: [
@@ -64,8 +58,7 @@ const studies = [
       'Stakeholder NPS up 22 points',
     ],
   },
-  {
-    slug: 'internal-paas',
+  'internal-paas': {
     title: 'Internal PaaS (Developer Platform)',
     challenge: 'Inconsistent scaffolding and infra provisioning slowed teams.',
     solution: [
@@ -79,30 +72,40 @@ const studies = [
       'Reliability improved with standardized SLOs',
     ],
   },
-];
+};
 
-export default function CaseStudies() {
-  const navigate = useNavigate();
+export default function CaseStudyView() {
+  const { slug } = useParams();
+  const data = CASES[slug];
+  if (!data) return (
+    <section className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
+      <p className="text-[#1A1A1A]/80">Case study not found.</p>
+      <Link to="/case-studies" className="text-[#004D40] hover:underline">Back to Case Studies</Link>
+    </section>
+  );
+
   return (
-    <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12">
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <h2 className="font-serif text-3xl text-[#1A1A1A]">Case Studies</h2>
-          <p className="mt-2 text-sm text-[#1A1A1A]/80">Challenge • Solution • Impact with quantified outcomes.</p>
+    <section className="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+      <Link to="/case-studies" className="text-[#004D40] hover:underline">← Back to Case Studies</Link>
+      <h1 className="mt-4 font-serif text-3xl text-[#1A1A1A]">{data.title}</h1>
+      <div className="mt-6 grid md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 rounded-xl bg-white border border-[#BDBDBD]/50 p-6">
+          <h2 className="font-serif text-xl text-[#1A1A1A]">Solution</h2>
+          <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[#1A1A1A]/85">
+            {data.solution.map((s, i) => <li key={i}>{s}</li>)}
+          </ul>
+          <h2 className="mt-6 font-serif text-xl text-[#1A1A1A]">Challenge</h2>
+          <p className="mt-2 text-sm text-[#1A1A1A]/85">{data.challenge}</p>
         </div>
+        <aside className="rounded-xl bg-white border border-[#BDBDBD]/50 p-6">
+          <h3 className="font-serif text-lg text-[#1A1A1A]">Impact</h3>
+          <ul className="mt-3 list-disc pl-6 space-y-2 text-sm text-[#1A1A1A]/85">
+            {data.impact.map((s, i) => <li key={i}>{s}</li>)}
+          </ul>
+        </aside>
       </div>
-
-      <div className="mt-8 grid md:grid-cols-2 gap-6">
-        {studies.map((s, i) => (
-          <motion.div key={s.slug} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i*0.05 }}>
-            <CaseStudyCard title={s.title} challenge={s.challenge} impact={s.impact[0]} onClick={() => navigate(`/case-studies/${s.slug}`)} />
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="mt-10 p-5 rounded-xl bg-white border border-[#BDBDBD]/50">
-        <h3 className="font-serif text-xl text-[#1A1A1A]">Architectural Diagram (Example)</h3>
-        <p className="mt-2 text-sm text-[#1A1A1A]/80">High-level C4-style: Client SPA → API Gateway → Service Tier → DB/Cache/Queue. Edge caching and observability integrated end-to-end.</p>
+      <div className="mt-8 rounded-xl border border-[#BDBDBD]/50 p-6 bg-white">
+        <h3 className="font-serif text-lg text-[#1A1A1A]">High-level Diagram</h3>
         <div className="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
           <div className="rounded-lg border border-[#BDBDBD]/60 p-3">Client SPA</div>
           <div className="rounded-lg border border-[#BDBDBD]/60 p-3">API Gateway</div>

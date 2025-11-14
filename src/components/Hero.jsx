@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-export default function Hero({ onExplore, onReadBlog }) {
+export default function Hero({ onExploreHref = '/case-studies', onReadBlogHref = '/blog' }) {
   return (
     <section className="relative isolate overflow-hidden">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,77,64,0.08),transparent_40%),radial-gradient(circle_at_80%_10%,rgba(0,77,64,0.06),transparent_35%)]" aria-hidden />
@@ -30,18 +31,18 @@ export default function Hero({ onExplore, onReadBlog }) {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-8 flex flex-wrap gap-3"
             >
-              <button
-                onClick={onExplore}
+              <Link
+                to={onExploreHref}
                 className="inline-flex items-center gap-2 bg-[#004D40] text-white px-5 py-3 rounded-md text-sm font-semibold hover:bg-[#003831] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#004D40]"
               >
                 Explore Case Studies
-              </button>
-              <button
-                onClick={onReadBlog}
+              </Link>
+              <Link
+                to={onReadBlogHref}
                 className="inline-flex items-center gap-2 border border-[#BDBDBD] text-[#1A1A1A] px-5 py-3 rounded-md text-sm font-semibold hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#004D40]"
               >
                 Read the Blog
-              </button>
+              </Link>
             </motion.div>
           </div>
           <div className="relative">

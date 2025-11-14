@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useParams, Link } from 'react-router-dom';
 
 const CONTENT = {
   'architecting-for-outcomes': {
@@ -22,13 +23,19 @@ const CONTENT = {
   }
 };
 
-export default function PostView({ slug, onBack }) {
+export default function PostView() {
+  const { slug } = useParams();
   const post = CONTENT[slug];
-  if (!post) return null;
+  if (!post) return (
+    <section className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
+      <p className="text-[#1A1A1A]/80">Article not found.</p>
+      <Link to="/blog" className="text-[#004D40] hover:underline">Back to Blog</Link>
+    </section>
+  );
 
   return (
     <section className="mx-auto max-w-3xl px-4 sm:px-6 py-12">
-      <button onClick={onBack} className="text-[#004D40] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#004D40] rounded">← Back to Blog</button>
+      <Link to="/blog" className="text-[#004D40] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#004D40] rounded">← Back to Blog</Link>
       <motion.h1 initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="mt-4 font-serif text-3xl text-[#1A1A1A]">{post.title}</motion.h1>
       <div className="mt-2 text-xs text-[#1A1A1A]/60">{new Date(post.date).toLocaleDateString()} • {post.minutes}-min read</div>
       <article className="prose prose-neutral max-w-none mt-6">
